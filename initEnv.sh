@@ -55,6 +55,20 @@ if [ $? -eq 0 ]; then
     fi
 fi
 
+fc-list :lang=zh | grep "Noto Sans CJK" > /dev/null
+if [ $? -eq 1 ]; then
+    echo 正在安装中文字体
+    sudo apt-get install fonts-noto-cjk
+    if [ $? -eq 0 ]; then
+        echo 字体安装成功√
+    else
+        echo 字体安装失败
+        return 1
+    fi
+else
+    echo 字体已安装√
+fi
+
 cp -r hooks/* .git/hooks/
 sudo chmod u+x .git/hooks/*
 echo 添加钩子成功√
