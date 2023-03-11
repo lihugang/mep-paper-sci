@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+const childProcess = require('child_process');
+const fs = require('fs');
+const crypto = require('crypto');
+console.log('[1] 正在编译文档 0/2');
+childProcess.execSync('rm -rf paper.*.pdf');
+childProcess.exec('xelatex paper.tex', (error, stdout, stderr) => {
+    if (error) {
+        console.error('[1] 编译文档失败');
+        console.error(error);
+        console.error(stderr);
+        console.log(stdout);
+    }
+    console.log('[2] 正在编译文档 1/2');
+    childProcess.exec('xelatex paper.tex', (error, stdout, stderr) => {
+        if (error) {
+            console.error('[2] 编译文档失败');
+            console.error(error);
+            console.error(stderr);
+            console.log(stdout);
+        }
+        console.log('[2] 编译文档成功');
+        const paperContent = fs.readFileSync('paper.pdf', 'binary');
+        const sha512 = crypto.createHash('sha512').update(paperContent).digest('hex');
+        fs.writeFileSync('index.html', `<script>location.href="paper.${sha512}.pdf";</script>`);
+        fs.createReadStream('paper.pdf', {
+            autoClose: true
+        }).pipe(fs.createWriteStream(`paper.${sha512}.pdf`)).on('close', () => {
+            console.log('[3] 文档预览生成成功');
+            childProcess.execSync('git add paper.pdf');
+            childProcess.execSync('git add paper.tex');
+            childProcess.execSync(`git add paper.${sha512}.pdf`);
+            childProcess.execSync('git add index.html');
+            setTimeout(() => {
+                console.log('[4] 编译文件已追踪');
+            }, 5000);
+        });
+
+    });
+});
