@@ -55,16 +55,36 @@ if [ $? -eq 0 ]; then
     fi
 fi
 
-fc-list :lang=zh | grep "Noto Sans CJK" > /dev/null
+fc-list | grep "CMU" > /dev/null
 if [ $? -eq 1 ]; then
-    echo 正在安装中文字体
-    sudo apt-get install fonts-noto-cjk
+    echo 正在安装字体
+    wget -O cm-fonts.tar.xz https://fileshare.lihugang.top/cm-unicode-0.7.0-ttf.tar.xz
+    tar -xf cm-fonts.tar.xz
+    rm -rf cm-fonts.tar.xz
+    sudo mkdir /usr/share/fonts/cm/
+    sudo cp cm-unicode-0.7.0/*.ttf /usr/share/fonts/cm/
+    sudo chmod 755 -R /usr/share/fonts/cm
+    sudo mkfontscale
+    sudo mkfontdir
+    sudo fc-cache -fv
+    fc-list | grep "CMU" > /dev/null
     if [ $? -eq 0 ]; then
-        echo 字体安装成功√
+        rm -rf fonts.dir
+        rm -rf fonts.scale
+        sudo apt-get install fonts-noto-cjk
+        fc-list | grep "Noto Sans CJK" > /dev/null
+        if [ $? -eq 0]; then
+            echo 字体安装成功√
+        else
+            echo 字体安装失败
+            return 1
+        fi
     else
+        rm -rf cm-unicode-0.7.0/
         echo 字体安装失败
         return 1
     fi
+    rm -rf cm-unicode-0.7.0/
 else
     echo 字体已安装√
 fi

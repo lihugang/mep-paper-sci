@@ -3,7 +3,7 @@
 
 \setCJKmainfont{Noto Sans CJK SC}
 \setCJKmathfont{Noto Sans Math}
-\setmainfont{Noto Sans}
+\setmainfont{CMU Sans Serif}
 % 设置字体
 
 \setlength{\headheight}{20pt} % 主标题
@@ -43,7 +43,7 @@
     \addtocounter{refCounter}{1}
     $^{
         \hyperref[reference-from-#1]{
-            [\arabic{refCounter}]
+            [\,\arabic{refCounter}\,]
         }
     }$
 }
@@ -53,7 +53,7 @@
     \label{reference-from-#1}
     \addtocounter{refCounter}{1}
     \hyperref[reference-to-#1]{
-        $[\arabic{refCounter}]$
+        $[\,\arabic{refCounter}\,]$
     }
     \quad
 }
