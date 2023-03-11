@@ -1,0 +1,104 @@
+\documentclass[UTF8]{ctexart} % 中文支持
+\usepackage{xeCJK}
+
+\setCJKmainfont{Noto Sans CJK SC}
+\setCJKmathfont{Noto Sans Math}
+\setmainfont{Noto Sans}
+% 设置字体
+
+\setlength{\headheight}{20pt} % 主标题
+\usepackage[a4paper, left=3.18cm, right=3.18cm, top=2.54cm, bottom=2.54em]{geometry} % a4纸张大小布局
+
+\usepackage[colorlinks=true]{hyperref} %链接标注
+
+% 网址换行
+\usepackage{xurl}
+
+% 基本信息
+\newcommand{\titleValue}{在图片上快速编辑公式的编辑器设计}
+\newcommand{\authorValue}{李沪纲}
+\newcommand{\pagecounts}{3}
+
+% 标题信息
+\title{\titleValue}
+\author{\authorValue}
+\date{\today}
+
+%页眉
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\titleValue}
+\rhead{ 第\thepage 页 \quad 共 \pagecounts 页 }
+% 页眉标注主题和页码
+
+\newcommand{\p}[1]{\paragraph{\mdseries{
+    \indent #1
+}}}
+
+% 段落样式
+\newcounter{refCounter}
+\newcommand{\refTo}[1]{
+    \label{reference-to-#1}
+    \addtocounter{refCounter}{1}
+    $^{
+        \hyperref[reference-from-#1]{
+            [\arabic{refCounter}]
+        }
+    }$
+}
+\newcommand{\refClear}{\setcounter{refCounter}{0}}
+\newcommand{\refFrom}[1]{
+    \noindent
+    \label{reference-from-#1}
+    \addtocounter{refCounter}{1}
+    \hyperref[reference-to-#1]{
+        $[\arabic{refCounter}]$
+    }
+    \quad
+}
+% 文献引用
+
+\usepackage{listings} % 代码块
+\lstset{
+    columns = fixed,
+    numbers = left,
+    frame = single,
+    breaklines = true,
+    showstringspaces = false,
+    showtabs = true,
+    tabsize = 4,
+    aboveskip=4pt,
+    belowskip=4pt,
+    basicstyle=\ttfamily,
+    backgroundcolor=\color[RGB]{255, 255, 255},
+    keywordstyle=\color[RGB]{161, 84, 190},
+    commentstyle=\color[RGB]{193, 190, 179},
+    numberstyle=\color[RGB]{121, 185, 204},
+    stringstyle=\color[RGB]{242, 192, 79},
+    identifierstyle=\color[RGB]{86, 169, 218}
+}
+% 代码块样式
+
+\begin{document}
+
+\maketitle
+% 标题
+
+\include{paper/abstract.tex}
+
+\tableofcontents
+\thispagestyle{empty}
+% 目录
+
+\newpage
+\setcounter{page}{1}
+\addtocounter{totalpages}{-2} %目录，摘要
+
+\include{paper/body/introduction.tex}
+
+\include{paper/reference.tex}
+
+\include{paper/appendix.tex}
+
+\end{document}
