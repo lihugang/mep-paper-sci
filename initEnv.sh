@@ -6,6 +6,7 @@ if [ $? -eq 127 ]; then
     sudo apt-get install texlive
     sudo apt-get install texlive-xetex
     sudo apt-get install texlive-lang-chinese
+    sudo apt-get install texlive-full
     if [ $? -eq 0 ]; then
         echo TexLive安装成功
     else

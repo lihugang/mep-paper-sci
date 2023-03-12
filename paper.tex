@@ -17,7 +17,7 @@
 % 基本信息
 \newcommand{\titleValue}{在图片上快速编辑公式的编辑器设计}
 \newcommand{\authorValue}{李沪纲}
-\newcommand{\pagecounts}{4}
+\newcommand{\pagecounts}{8}
 
 % 标题信息
 \title{\titleValue}
@@ -39,9 +39,7 @@
 % 段落样式
 \newcounter{refCounter}
 \newcommand{\refTo}[1]{
-    \label{reference-to-#1}
-    \addtocounter{refCounter}{1}
-    $^{
+    \label{reference-to-#1}\addtocounter{refCounter}{1}$^{
         \hyperref[reference-from-#1]{
             [\,\arabic{refCounter}\,]
         }
@@ -49,13 +47,7 @@
 }
 \newcommand{\refClear}{\setcounter{refCounter}{0}}
 \newcommand{\refFrom}[1]{
-    \noindent
-    \label{reference-from-#1}
-    \addtocounter{refCounter}{1}
-    \hyperref[reference-to-#1]{
-        $[\,\arabic{refCounter}\,]$
-    }
-    \quad
+    \noindent\label{reference-from-#1}\addtocounter{refCounter}{1}\hyperref[reference-to-#1]{$[\,\arabic{refCounter}\,]$}\,
 }
 % 文献引用
 
@@ -85,6 +77,9 @@
 }
 % 代码块样式
 
+\usepackage{multirow}
+% 表格
+
 \begin{document}
 
 \maketitle
@@ -99,7 +94,7 @@
 
 \newpage
 \setcounter{page}{1}
-\addtocounter{totalpages}{-2} % 目录，摘要
+% 目录，摘要
 
 \include{paper/body/introduction.tex} % 引言
 \include{paper/body/framework-design.tex} % 架构设计
