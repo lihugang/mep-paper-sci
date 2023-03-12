@@ -38,3 +38,32 @@
     \refTo{electron-introduction}
     ，做好兼容层就可以。可以一次编写，到处运行。
 }
+
+\subsection{渲染系统}
+\p{
+    公式渲染是这个设计中最核心的部分，我们的设计应该同时具备实用性和易用性，那么“所见即所得”是我们追求的目标之一，在编辑器中应该划分一部分出来区域来渲染预览效果。为了保证预览效果，预览区域的形状大小应该和图片形状大小是相似的，即预览的宽高比和原始图片的宽高比相等。用数学的方法来写，就是
+    \begin{equation}
+        ratio = 
+        \frac{
+            width_{preview}
+        }{
+            height_{preview}
+        }
+        =
+        \displaystyle\frac{
+            width_{origin}
+        }{
+            height_{origin}
+        }\label{image_ratio}
+    \end{equation}
+    这样能保证预览不会变形。
+}
+\p{
+    前面已经提到一些，文本渲染的编译链如下 \\
+}
+\input{paper/charts/text-compile-chain.tex}
+\p{
+    如果想添加其他图片、线条、形状的话可以在图层的地方合并生成预览图。
+}
+
+\subsection{用户输入}

@@ -1,0 +1,11 @@
+\begin{tikzpicture}[node distance=120pt]
+\node[draw, rounded corners] (source) {源文本};
+\node[draw, rounded corners, right=of source] (element) {HTML元素};
+\node[draw, rounded corners, right=80pt of element] (element-with-math) {已渲染公式的元素};
+\node[draw, rounded corners, below=20pt of element-with-math] (image) {图层};
+\node[draw, rounded corners, below=20pt of source] (result) {预览图片};
+
+\graph{
+    (source) -> ["正则表达式切割tokens"above](element) -> ["KaTeX"above](element-with-math) -> ["html2canvas"left](image) -> ["CanvasRenderingContext2D.drawImage()"above](result);
+};
+\end{tikzpicture}
