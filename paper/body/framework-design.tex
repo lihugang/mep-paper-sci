@@ -1,0 +1,40 @@
+\section{架构设计}
+\subsection{技术选型}
+\p{
+    本论文的核心要点就是要在图片上编辑\textcolor{red}{公式}，那么最重要的功能必然是进行公式的渲染。目前，在计算机中进行公式的渲染大多使用
+    \TeX
+    \refTo{tex-introduction}
+    。
+}
+\p{
+    \TeX
+    是一套排版系统，由计算机科学家、斯坦福大学教授\, Donald Knuth \, 设计和编写的，于1978年首次发布，这是最复杂的数字印刷系统之一。
+    \TeX
+    被广泛应用于学术界，尤其是数学、计算机科学、经济学、工程学、物理学等等。在
+    \TeX
+    的基础上，衍生出了许多封装更优雅的排版系统，例如编写这篇论文所用的排版系统\, Xe
+    \LaTeX 就是基于
+    \TeX
+    封装的。
+}
+\p {
+    作为中学生，我们没有足够的知识储备和精力去维护一套新的渲染公式的系统，只能选择站在前人的肩膀上进行我们的项目。但是，
+    \TeX
+    在不同的平台上也有不同的实现，经过仔细筛查，我选用了Web+KaTeX
+    \refTo{katex-introduction}
+    的方案。从TexLive
+    \refTo{texlive-introduction}
+    安装的
+    \TeX
+    过于庞大而且只方便生成pdf，并不方便直接渲染在图片上。而MathJax
+    \refTo{mathjax-introduction}
+    的速度太慢，可能会对性能造成一定影响。所以我选择了KaTeX，这是一个能在网页上渲染公式的库，它的渲染速度最快，不少支持显示公式的网站也使用了这个库，例如OpenAI的ChatGPT
+    \refTo{chatgpt-introduction}。
+}
+\p {
+    同时，使用KaTeX支持在网页上运行，配合将文档元素转成图片的库html2canvas
+    \refTo{html2canvas-introduction}
+    就可以将KaTeX渲染出的元素转换成图片，方便在原先的图片上叠加图层。另外，使用Web的好处是只需要打开浏览器就可以快速编辑，免去安装的麻烦，更加人性化。如果要发行客户端，只要往上套好Electron
+    \refTo{electron-introduction}
+    ，做好兼容层就可以。可以一次编写，到处运行。
+}
