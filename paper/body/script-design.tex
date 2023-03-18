@@ -1,0 +1,33 @@
+\section{命令系统}
+\subsection{引言}
+\p{
+    像 \LaTeX
+    一样，我们需要提供一个比较简便的命令系统（注意，这是图灵不完备的）来使用户控制画布的排版、图像的添加、文字的渲染等问题。为了方便使用，命令应该像这样：\lstinline|draw from 30 30 to 300 300|，比较贴切自然语言，使得用户学习起来更方便。另外，以空格作为分隔符，在处理这些命令的时候也比较方便，性能也比较高。
+}
+
+\subsection{命令设计}
+\subsubsection{画布元数据}
+\p{
+    在画布中我们需要设置一些基本信息，例如画布尺寸，字体颜色，字体大小，用什么字体等等。如果在画布外面单独弄一块区域出来设置，那么在调整的时候还是得需要鼠标，会对工作效率有一定影响。为此，设置画布的基本信息应该也在命令系统中提供。既然是设置信息，不妨就将命令名称称为\lstinline|set|，那么就设置字体就是\lstinline|set font|，设置颜色\lstinline|set color|，设置字体大小\lstinline|size|，设置画布尺寸\lstinline|set canvas|。可以得到以下抽象语法树。\\ \\
+}
+\input{paper/charts/set-command-ast.tex}
+\p{
+    宽度、高度、字体大小都必须是正整数($\in N*$)，颜色编码应该为6位十六进制数字，代表RGB，前两位是红色的强度，中间两位是蓝色的强度，后两位是绿色的强度，值域为$[0, 255]$(十进制)或$[00, ff]$（十六进制），值越大表示强度越大，占比越多。
+    \begin{table}[h!]
+        \begin{center}
+            \caption{常见颜色的RGB值}
+            \begin{tabular}{l|c|c|r}
+                \textbf{颜色} & \textbf{十六进制颜色编码} & \textbf{渲染效果} \\
+                \hline
+                白色 & $ffffff$ & \colorbox[rgb]{1,1,1}{白底黑字} \\
+                黑色 & $000000$ & \colorbox[rgb]{0,0,0}{\color{white}黑底白字} \\
+                红色 & $ff0000$ & \colorbox[rgb]{1,0,0}{\color{white}红底白字} \\
+                绿色 & $00ff00$ & \colorbox[rgb]{0,1,0}{绿底黑字} \\
+                蓝色 & $0000ff$ & \colorbox[rgb]{0,0,1}{\color{white}蓝底白字} \\
+                黄色 & $ffff00$ & \colorbox[rgb]{1,1,0}{黄底黑字} \\
+                青色 & $00ffff$ & \colorbox[rgb]{0,1,1}{青底黑字} \\
+                紫色 & $ff00ff$ & \colorbox[rgb]{1,0,1}{\color{white}紫底白字} \\
+            \end{tabular}
+        \end{center}
+    \end{table}
+}

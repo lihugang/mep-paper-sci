@@ -2,8 +2,8 @@
 \usepackage{xeCJK}
 
 \setCJKmainfont{Noto Sans CJK SC}
-\setCJKmathfont{Noto Sans Math}
-\setmainfont{CMU Sans Serif}
+\setCJKmathfont{CMU Classical Serif}
+\setmainfont{CMU Classical Serif}
 % 设置字体
 
 \setlength{\headheight}{20pt} % 主标题
@@ -17,7 +17,7 @@
 % 基本信息
 \newcommand{\titleValue}{在图片上快速编辑公式的编辑器设计}
 \newcommand{\authorValue}{李沪纲}
-\newcommand{\pagecounts}{8}
+\newcommand{\pagecounts}{10}
 
 % 标题信息
 \title{\titleValue}
@@ -80,6 +80,12 @@
 \usepackage{multirow}
 % 表格
 
+\renewcommand{\thefootnote}{\roman{footnote}}
+% 脚注样式
+
+\usepackage{xcolor}
+% 颜色
+
 \begin{document}
 
 \maketitle
@@ -98,6 +104,7 @@
 
 \include{paper/body/introduction.tex} % 引言
 \include{paper/body/framework-design.tex} % 架构设计
+\include{paper/body/script-design.tex} % 脚本设计
 \include{paper/reference.tex} % 参考文献
 \include{paper/appendix.tex} % 附录
 
