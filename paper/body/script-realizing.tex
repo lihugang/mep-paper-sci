@@ -1,0 +1,9 @@
+\subsection{编译过程}
+\input{paper/charts/command-system-frame.tex}
+\p{
+    先预处理，转换宏，做好行号标记，方便后面在编译过程中输出报错行号。在编译过程中，通过空格切割标识符，剔去多余的空格，根据上节中的状态机将代码转换为AST。
+}
+\footnote{AST: 抽象语法树}
+\p{
+    最后再根据AST中语句的类型进行解释运行。
+}

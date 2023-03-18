@@ -1,0 +1,33 @@
+\begin{tikzpicture}[node distance=120pt]
+    \node[draw, rounded corners, fill=green] (text) {text};
+
+    \node[draw, rounded corners, left=of text, fill=green] (abs) {abs};
+    \node[draw, rounded corners, right=of text, fill=green] (rwd) {rwd};
+
+    \node[draw, rounded corners, below=of text, fill=red] (unknown-symbol) {未知标识符};
+    \node[draw, rounded corners, below=40pt of unknown-symbol, fill=yellow] (range-warning) {值域错误($abs$定位应$\in N*$，$rwd$定位应$\in [0, 1]$)};
+
+    \node[draw, rounded corners, below=of abs, fill=green] (abs-width) {[宽度]};
+    \node[draw, rounded corners, below=of abs-width, fill=green] (abs-height) {[高度]};
+    \node[draw, rounded corners, below=of rwd, fill=green] (rwd-width) {[宽度]};
+    \node[draw, rounded corners, below=of rwd-width, fill=green] (rwd-height) {[高度]};
+
+    \node[draw, rounded corners, below=of range-warning, fill=green] (texts) {[文本]};
+
+    \graph{
+    (text) -> (abs) -> ["$\in N*$"](abs-width) -> ["$\in N*$"](abs-height) -> (texts);
+    (text) -> (rwd) -> ["$\in [0.0, 1.0]$"](rwd-width) -> ["$\in [0.0, 1.0]$"](rwd-height) -> (texts);
+
+    (text) -> ["默认"](unknown-symbol);
+
+    (abs) -> ["$\notin N*$"](range-warning);
+    (rwd) -> ["$\notin N*$"](range-warning);
+    (abs) -> ["不是数字"](unknown-symbol);
+    (rwd) -> ["不是数字"above](unknown-symbol);
+
+    (abs-width) -> ["$\notin N*$"](range-warning);
+    (rwd-width) -> ["$\notin N*$"](range-warning);
+    (abs-width) -> ["不是数字"](unknown-symbol);
+    (rwd-width) -> ["不是数字"](unknown-symbol);
+    };
+\end{tikzpicture}

@@ -16,19 +16,23 @@
     \node[draw, rounded corners, right=of font, fill=green] (font-name) {[字体名称]};
     \node[draw, rounded corners, above=20pt of font-name, fill=yellow] (invalid-font-name) {未找到字体};
 
+    \node[draw, rounded corners, below=of set, fill=red] (unknown-ast-symbol) {未知标识符};
+
     \graph{
-        (set) -> (canvas) -> ["$\in N*$"](cv-width) -> ["$\in N*$"](cv-height);
-        (canvas) -> ["$\notin N*$"](range-error);
-        (cv-width) -> ["$\notin N*$"](range-error);
+    (set) -> (canvas) -> ["$\in N*$"](cv-width) -> ["$\in N*$"](cv-height);
+    (canvas) -> ["$\notin N*$"](range-error);
+    (cv-width) -> ["$\notin N*$"](range-error);
 
-        (set) -> (color) -> ["$length = 6$"above,"value is a valid hexadecimal number"below](color-value);
-        (color) -> ["otherwise"below](color-invalid-range-warning);
+    (set) -> (color) -> ["$length = 6$"above,"值是合法的十六进制数"below](color-value);
+    (color) -> ["默认"below](color-invalid-range-warning);
 
-        (set) -> (size) -> ["$\in N*$"](size-value);
-        (size) -> ["$\notin N*$"](range-error);
+    (set) -> (size) -> ["$\in N*$"](size-value);
+    (size) -> ["$\notin N*$"](range-error);
 
-        (set) -> (font) -> ["$\in fonts$"](font-name);
-        (font) -> ["$\notin fonts$"](invalid-font-name);
+    (set) -> (font) -> ["$\in fonts$"](font-name);
+    (font) -> ["$\notin fonts$"](invalid-font-name);
+
+    (set) -> ["默认"](unknown-ast-symbol);
     };
 \end{tikzpicture}
 \footnote{绿色部分是合法的标识符，黄色是警告，红色是错误（会中断编译）}

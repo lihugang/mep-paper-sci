@@ -72,8 +72,12 @@
             height_{raw}
         }\label{image-ratio-2}
     \end{equation}
-    $ratio$是比例，$width_{canvas}$是预览区的宽度，$height_{canvas}$是预览区的高度，$width_{raw}$是原始图像的宽度，$height_{raw}$是原始图像的高度。
 }
+\footnote{$ratio$: 比例}
+\footnote{$width_{canvas}$：预览区宽度}
+\footnote{$height_{canvas}$：预览区高度}
+\footnote{$width_{raw}$：原始图像宽度}
+\footnote{$height_{raw}$：原始图像高度}
 \p{
     前面已经提到一些，文本渲染的编译链如下 \\ \\
 }
@@ -144,19 +148,19 @@
         \begin{center}
             \caption{编辑器布局变量名对应表}
             \begin{tabular}{l|c|r}
-                \textbf{名称} & \textbf{下标} & \textbf{内容} \\
+                \textbf{名称}           & \textbf{下标} & \textbf{内容}    \\
                 \hline
-                \multirow{5}{*}{width} & container & 容器（页面）宽度 \\
-                & canvas & 画布宽度 \\
-                & editor & 代码编辑器宽度 \\
-                & preview & 单行预览区宽度 \\
-                & image & 图片管理区宽度 \\
+                \multirow{5}{*}{width}  & container     & 容器（页面）宽度 \\
+                                        & canvas        & 画布宽度         \\
+                                        & editor        & 代码编辑器宽度   \\
+                                        & preview       & 单行预览区宽度   \\
+                                        & image         & 图片管理区宽度   \\
                 \hline
-                \multirow{5}{*}{height} & container & 容器（页面）高度 \\
-                & canvas & 画布高度 \\
-                & editor & 代码编辑器高度 \\
-                & preview & 单行预览区高度 \\
-                & image & 图片管理区高度 \\
+                \multirow{5}{*}{height} & container     & 容器（页面）高度 \\
+                                        & canvas        & 画布高度         \\
+                                        & editor        & 代码编辑器高度   \\
+                                        & preview       & 单行预览区高度   \\
+                                        & image         & 图片管理区高度   \\
             \end{tabular}
         \end{center}
     \end{table}
@@ -172,12 +176,12 @@
         \begin{center}
             \caption{各分区最小最大尺寸}
             \begin{tabular}{l|c|c|r}
-                \textbf{名称} & \textbf{最小尺寸(宽度 $\times$ 高度)} & \textbf{最大尺寸(宽度 $\times$ 高度)} \\
+                \textbf{名称}  & \textbf{最小尺寸(宽度 $\times$ 高度)} & \textbf{最大尺寸(宽度 $\times$ 高度)}                        \\
                 \hline
-                代码编辑器 & $40\% \times 80$ & $(width_{container} - 240) \times 80\%$ \\
-                画布 & $240 \times 80$ & $60\% \times 80\%$ \\
-                单行效果预览区 & $40\% \times 20\%$ & $(width_{container} - 240) \times (height_{container} - 80)$ \\
-                图片管理区 & $240 \times 20\%$ & $60\% \times (height_{container} - 80)$ \\
+                代码编辑器     & $40\% \times 80$                      & $(width_{container} - 240) \times 80\%$                      \\
+                画布           & $240 \times 80$                       & $60\% \times 80\%$                                           \\
+                单行效果预览区 & $40\% \times 20\%$                    & $(width_{container} - 240) \times (height_{container} - 80)$ \\
+                图片管理区     & $240 \times 20\%$                     & $60\% \times (height_{container} - 80)$                      \\
             \end{tabular}
         \end{center}
     \end{table}

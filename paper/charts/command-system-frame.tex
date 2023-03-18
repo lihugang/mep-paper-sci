@@ -1,0 +1,10 @@
+\begin{tikzpicture}[node distance=40pt]
+    \node[draw, rounded corners] (source) {源代码};
+    \node[draw, rounded corners, right=of source] (pre-process) {预处理};
+    \node[draw, rounded corners, right=of pre-process] (ast) {转换成抽象语法树};
+    \node[draw, rounded corners, right=of ast] (script) {执行脚本，渲染图片};
+
+    \graph{
+        (source) -> (pre-process) -> (ast) -> (script);
+    };
+\end{tikzpicture}

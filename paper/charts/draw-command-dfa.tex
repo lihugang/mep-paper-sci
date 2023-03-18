@@ -1,0 +1,29 @@
+\begin{tikzpicture}[node distance=60pt]
+    \node[draw, rounded corners, fill=green] (draw) {draw};
+    \node[draw, rounded corners, right=of draw, fill=green] (from) {from};
+    \node[draw, rounded corners, right=of from, fill=green] (sx) {开始位置/横坐标};
+    \node[draw, rounded corners, right=of sx, fill=green] (sy) {开始位置/纵坐标};
+    \node[draw, rounded corners, below=of sy, fill=green] (to) {to};
+    \node[draw, rounded corners, left=of to, fill=green] (dx) {结束位置/横坐标};
+    \node[draw, rounded corners, left=of dx, fill=green] (dy) {结束位置/纵坐标};
+
+    \node[draw, rounded corners, above=150pt of from, fill=red] (unknown-symbol) {未知标识符};
+    \node[draw, rounded corners, below=120pt of dx, fill=yellow] (range-warning) {值域错误};
+
+    \graph{
+    (draw) -> (from) -> ["$\in N*$"](sx) -> ["$\in N*$"](sy) -> (to) -> ["$\in N*$"](dx) -> ["$\in N*$"](dy);
+
+    (draw) -> ["默认"left](unknown-symbol);
+    (sy) -> ["默认"right](unknown-symbol);
+
+    (from) -> ["不是数字"](unknown-symbol);
+    (sx) -> ["不是数字"](unknown-symbol);
+    (to) -> ["不是数字"](unknown-symbol);
+    (dx) -> ["不是数字"](unknown-symbol);
+
+    (from) -> ["$\notin N*$"](range-warning);
+    (sx) -> ["$\notin N*$"](range-warning);
+    (to) -> ["$\notin N*$"](range-warning);
+    (dx) -> ["$\notin N*$"](range-warning);
+    };
+\end{tikzpicture}

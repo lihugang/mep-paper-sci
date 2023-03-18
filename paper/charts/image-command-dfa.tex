@@ -1,0 +1,60 @@
+\begin{tikzpicture}[node distance=80pt]
+    \node[draw, rounded corners, fill=green] (image) {image};
+
+    \node[draw, rounded corners, left=140pt of image, fill=green] (loc-abs) {abs};
+    \node[draw, rounded corners, right=140pt of image, fill=green] (loc-rwd) {rwd};
+
+    \node[draw, rounded corners, below=20pt of image, fill=green] (id) {[图片ID]};
+
+    \node[draw, rounded corners, below=20pt of id, fill=green] (at) {at};
+
+    \node[draw, rounded corners, left=140pt of at, fill=green] (abs-x) {[横坐标]};
+    \node[draw, rounded corners, below=200pt of abs-x, fill=green] (abs-y) {[纵坐标]};
+    \node[draw, rounded corners, right=140pt of at, fill=green] (rwd-x) {[横坐标]};
+    \node[draw, rounded corners, below=200pt of rwd-x, fill=green] (rwd-y) {[纵坐标]};
+
+    \node[draw, rounded corners, below=of at, fill=blue] (s1) {};
+    \node[draw, rounded corners, left=40pt of s1, fill=red] (unknown-symbol) {未知标识符};
+
+    \node[draw, rounded corners, below=160pt of s1, fill=green] (resize) {resize};
+
+    \node[draw, rounded corners, below=of resize, fill=blue] (s2) {};
+    \node[draw, rounded corners, right=40pt of s2, fill=orange] (range-warning) {值域错误};
+
+    \node[draw, rounded corners, left=140pt of resize, fill=green] (resize-abs) {abs};
+    \node[draw, rounded corners, right=140pt of resize, fill=green] (resize-rwd) {rwd};
+
+    \node[draw, rounded corners, below=of resize-abs, fill=green] (abs-w) {[宽度]};
+    \node[draw, rounded corners, below=of abs-w, fill=green] (abs-h) {[高度]};
+    \node[draw, rounded corners, below=of resize-rwd, fill=green] (rwd-w) {[宽度]};
+    \node[draw, rounded corners, below=of rwd-w, fill=green] (rwd-h) {[高度]};
+
+    \graph{
+    (image) -> [very thick,green](loc-abs) -> [very thick,green](id) -> ["$\in images$",very thick,green](at) -> ["定位方式$=abs$且$\in N*$",green,very thick](abs-x) -> ["$\in N*$",green,very thick](abs-y) -> [green,very thick](resize) -> [green,very thick](resize-abs) -> ["$\in N*$",green,very thick](abs-w) -> ["$\in N*$",green,very thick](abs-h);
+    (image) -> [green,very thick](loc-rwd) -> [green,very thick](id) -> ["$\in images$",very thick,green](at) -> ["定位方式$=rwd$且$\in [0,1]$",green,very thick](rwd-x) -> ["$\in [0,1]$",green,very thick](rwd-y) -> [green,very thick](resize) -> [green,very thick](resize-rwd) -> ["$\in [0,1]$",green,very thick](rwd-w) -> ["$\in [0,1]$",green,very thick](rwd-h);
+
+    (id) -> ["$\notin images$",orange](range-warning);
+
+    (image) -> ["默认",red,dashed](unknown-symbol);
+    (at) -> ["默认",red,dashed](unknown-symbol);
+    (resize) -> ["默认",red,dashed](unknown-symbol);
+
+    (abs-x) -> ["不是数字",red,dashed](unknown-symbol);
+    (abs-y) -> ["不是数字",red,dashed](unknown-symbol);
+    (abs-w) -> ["不是数字",red,dashed](unknown-symbol);
+    (abs-h) -> ["不是数字",red,dashed](unknown-symbol);
+    (rwd-x) -> ["不是数字",red,dashed](unknown-symbol);
+    (rwd-y) -> ["不是数字",red,dashed](unknown-symbol);
+    (rwd-w) -> ["不是数字",red,dashed](unknown-symbol);
+    (rwd-h) -> ["不是数字",red,dashed](unknown-symbol);
+
+    (abs-x) -> ["$\notin N*$",orange,dotted,thick](range-warning);
+    (abs-y) -> ["$\notin N*$",orange,dotted,thick](range-warning);
+    (abs-w) -> ["$\notin N*$",orange,dotted,thick](range-warning);
+    (abs-h) -> ["$\notin N*$",orange,dotted,thick](range-warning);
+    (rwd-x) -> ["$\notin [0, 1]$",orange,dotted,thick](range-warning);
+    (rwd-y) -> ["$\notin [0, 1]$",orange,dotted,thick](range-warning);
+    (rwd-w) -> ["$\notin [0, 1]$",orange,dotted,thick](range-warning);
+    (rwd-h) -> ["$\notin [0, 1]$",orange,dotted,thick](range-warning);
+    };
+\end{tikzpicture}

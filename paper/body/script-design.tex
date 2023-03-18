@@ -1,33 +1,110 @@
-\section{命令系统}
-\subsection{引言}
-\p{
-    像 \LaTeX
-    一样，我们需要提供一个比较简便的命令系统（注意，这是图灵不完备的）来使用户控制画布的排版、图像的添加、文字的渲染等问题。为了方便使用，命令应该像这样：\lstinline|draw from 30 30 to 300 300|，比较贴切自然语言，使得用户学习起来更方便。另外，以空格作为分隔符，在处理这些命令的时候也比较方便，性能也比较高。
-}
-
 \subsection{命令设计}
 \subsubsection{画布元数据}
 \p{
-    在画布中我们需要设置一些基本信息，例如画布尺寸，字体颜色，字体大小，用什么字体等等。如果在画布外面单独弄一块区域出来设置，那么在调整的时候还是得需要鼠标，会对工作效率有一定影响。为此，设置画布的基本信息应该也在命令系统中提供。既然是设置信息，不妨就将命令名称称为\lstinline|set|，那么就设置字体就是\lstinline|set font|，设置颜色\lstinline|set color|，设置字体大小\lstinline|size|，设置画布尺寸\lstinline|set canvas|。可以得到以下抽象语法树。\\ \\
+    在画布中我们需要设置一些基本信息，例如画布尺寸，字体颜色，字体大小，用什么字体等等。如果在画布外面单独弄一块区域出来设置，那么在调整的时候还是得需要鼠标，会对工作效率有一定影响。为此，设置画布的基本信息应该也在命令系统中提供。既然是设置信息，不妨就将命令名称称为\lstinline|set|，那么就设置字体就是\lstinline|set font|，设置颜色\lstinline|set color|，设置字体大小\lstinline|size|，设置画布尺寸\lstinline|set canvas|。可以得到以下
 }
-\input{paper/charts/set-command-ast.tex}
+DFA\footnote{确定有限自动状态机}
+\paragraph{\\\\}
+\input{paper/charts/set-command-dfa.tex}
 \p{
     宽度、高度、字体大小都必须是正整数($\in N*$)，颜色编码应该为6位十六进制数字，代表RGB，前两位是红色的强度，中间两位是蓝色的强度，后两位是绿色的强度，值域为$[0, 255]$(十进制)或$[00, ff]$（十六进制），值越大表示强度越大，占比越多。
     \begin{table}[h!]
         \begin{center}
             \caption{常见颜色的RGB值}
-            \begin{tabular}{l|c|c|r}
-                \textbf{颜色} & \textbf{十六进制颜色编码} & \textbf{渲染效果} \\
+            \begin{tabular}{l|c|c|}
+                \textbf{颜色} & \textbf{十六进制颜色编码} & \textbf{渲染效果}                            \\
                 \hline
-                白色 & $ffffff$ & \colorbox[rgb]{1,1,1}{白底黑字} \\
-                黑色 & $000000$ & \colorbox[rgb]{0,0,0}{\color{white}黑底白字} \\
-                红色 & $ff0000$ & \colorbox[rgb]{1,0,0}{\color{white}红底白字} \\
-                绿色 & $00ff00$ & \colorbox[rgb]{0,1,0}{绿底黑字} \\
-                蓝色 & $0000ff$ & \colorbox[rgb]{0,0,1}{\color{white}蓝底白字} \\
-                黄色 & $ffff00$ & \colorbox[rgb]{1,1,0}{黄底黑字} \\
-                青色 & $00ffff$ & \colorbox[rgb]{0,1,1}{青底黑字} \\
-                紫色 & $ff00ff$ & \colorbox[rgb]{1,0,1}{\color{white}紫底白字} \\
+                白色          & $ffffff$                  & \colorbox[rgb]{1,1,1}{白底黑字}              \\
+                黑色          & $000000$                  & \colorbox[rgb]{0,0,0}{\color{white}黑底白字} \\
+                红色          & $ff0000$                  & \colorbox[rgb]{1,0,0}{\color{white}红底白字} \\
+                绿色          & $00ff00$                  & \colorbox[rgb]{0,1,0}{绿底黑字}              \\
+                蓝色          & $0000ff$                  & \colorbox[rgb]{0,0,1}{\color{white}蓝底白字} \\
+                黄色          & $ffff00$                  & \colorbox[rgb]{1,1,0}{黄底黑字}              \\
+                青色          & $00ffff$                  & \colorbox[rgb]{0,1,1}{青底黑字}              \\
+                紫色          & $ff00ff$                  & \colorbox[rgb]{1,0,1}{\color{white}紫底白字} \\
             \end{tabular}
         \end{center}
     \end{table}
+}
+\subsubsection{定位方式}
+\p{
+    关于元素如何在画布中定位，我设计了两种定位方式。第一种是$abs$，无论画布大小如何变化，元素始终会渲染在给出的坐标位置。第二种是$rwd$，响应式布局，需要给定一个纯小数（百分比），具体的渲染坐标会随着画布的大小变化而变化，但与各边保持的比例始终相同。下面是计算公式 \\
+}
+\begin{equation}
+    x_{transformed} = x_{percentage} \times canvas_{width}\label{transform-rwd-x}
+\end{equation}
+\begin{equation}
+    y_{transformed} = y_{percentage} \times canvas_{height}\label{transform-rwd-y}
+\end{equation}
+\footnote{$transformed$: 已经转换好的绝对坐标}
+\footnote{$percentage$: 元素在页面中位置的百分比}
+\subsubsection{文本渲染}
+\p{
+    结合元素的两种不同定位方式，得到以下DFA\\\\
+}
+\input{paper/charts/text-command-dfa.tex}
+\subsubsection{画线}
+\p{
+    从$(sx, sy)$画线条到$(dx, dy)$，线条粗细受\lstinline|set size|语句影响 \\ \\
+}
+\input{paper/charts/draw-command-dfa.tex}
+\p{
+    需要注意一点，这里的坐标都是在$abs$布局下的，对于$rwd$布局的支持作为可以改进的部分。
+}
+\subsubsection{添加图片}
+\p{
+    有时候也需要添加一些几何图形或其他图片到画布上，命令系统也提供了支持。添加图片包括三个部分：
+}
+\begin{itemize}
+    \item 图片ID
+    \item 图片位置
+    \item 图片尺寸
+\end{itemize}
+\p{
+    命令格式如下
+}
+\begin{math}
+    image
+    \begin{matrix}
+        \underbrace{
+            abs/rwd \begin{matrix}
+                        ID \\ \overbrace{[sha256]}
+                    \end{matrix} at [x] [y]
+        } \\ location
+    \end{matrix}
+    \begin{matrix}
+        \underbrace{resize [width] [height]} \\ size
+    \end{matrix}
+\end{math}
+\footnote{$image: $图片命令}
+\footnote{$ID: $图片ID}
+\footnote{$location: $图片定位}
+\footnote{$size: $图片尺寸}
+\p{
+    根据上面的命令格式，可以生成一张很大的DFA图：\\\\
+}
+\input{paper/charts/image-command-dfa.tex}
+\subsubsection{\LaTeX
+    宏}
+\p{
+    公式的环境是\LaTeX
+    的数学环境，有时候公式中有大量重复的命令，输入繁琐不方便，就可以设置一个简单的宏来代替。比如用\\
+}
+\begin{lstlisting}
+    \root-1o2
+\end{lstlisting}
+\p{
+    来代替\\
+}
+\begin{lstlisting}
+    x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\end{lstlisting}
+\p{
+    上面例子的命令就是\\
+}
+\begin{lstlisting}
+    macro \root-1o2 x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\end{lstlisting}
+\p{
+    命令定义为：\lstinline|macro 宏名 宏值|
 }
