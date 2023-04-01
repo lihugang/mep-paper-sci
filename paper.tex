@@ -16,7 +16,7 @@
 % 基本信息
 \newcommand{\titleValue}{在图片上快速编辑公式的编辑器设计}
 \newcommand{\authorValue}{李沪纲}
-\newcommand{\pagecounts}{10}
+\newcommand{\pagecounts}{19}
 
 % 标题信息
 \title{\titleValue}
@@ -54,6 +54,9 @@
 
 \usepackage{tikz} % 画图
 \usetikzlibrary{positioning, shapes.geometric, graphs, quotes}
+
+\usepackage{pgfplots}
+\pgfplotsset{width=7cm,compat=1.13}
 
 \usepackage{listings} % 代码块
 \lstset{
@@ -105,6 +108,8 @@
 \include{paper/body/framework-design.tex} % 架构设计
 \include{paper/body/script-system.tex} % 脚本系统
 \include{paper/body/difficulties&performance.tex} % 技术难点和性能优化
+\include{paper/body/hope.tex} % 展望
+\include{paper/body/thanks.tex} % 致谢
 \include{paper/reference.tex} % 参考文献
 \include{paper/appendix.tex} % 附录
 

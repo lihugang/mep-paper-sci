@@ -1,0 +1,23 @@
+\begin{tikzpicture}[node distance=150pt]
+    \node[draw, rounded corners, fill=green] (normal) {命令};
+    \node[draw, rounded corners, right=of set, fill=green] (macro) {多行字符串宏};
+
+    \node[draw, rounded corners, left=50pt of normal, fill=blue] (s1) {};
+    \node[draw, rounded corners, below=25pt of s1, fill=blue] (s2) {};
+    \node[draw, rounded corners, below=20pt of normal, fill=blue] (s3) {};
+
+    \node[draw, rounded corners, above=20pt of macro, fill=blue] (s4) {};
+    \node[draw, rounded corners, above=20pt of normal, fill=blue] (s5) {};
+
+    \node[draw, rounded corners, right=50pt of macro, fill=blue] (s6) {};
+    \node[draw, rounded corners, below=25pt of s6, fill=blue] (s7) {};
+    \node[draw, rounded corners, below=20pt of macro, fill=blue] (s8) {};
+
+    \graph{
+        (normal) -> ["如果字符是\lstinline|`|",orange](macro);
+        (normal) -> ["其他字符",blue](s1) -> [blue](s2) -> [blue](s3) -> [blue](normal);
+
+        (macro) -> ["如果字符是\lstinline|`|"right,orange](s4) -> [orange](s5) -> [orange](normal);
+        (macro) -> ["其他字符",below,blue](s6) -> [blue](s7) -> [blue](s8) -> [blue](macro);
+    };
+\end{tikzpicture}

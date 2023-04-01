@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        x=3cm,
+        symbolic x coords={Previous,Current,Refresh-Rate},
+        xtick=data,
+        nodes near coords,
+        every node near coord/.append style={
+            rotate=90,
+            anchor=west,
+        }
+    ]
+    \addplot coordinates {(Previous,30) (Current,55) (Refresh-Rate,60)}; 
+    \end{axis}
+\end{tikzpicture}

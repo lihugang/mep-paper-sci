@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        x=3cm,
+        symbolic x coords={html2canvas,html-to-image,dom-to-image,d2im,d2in},
+        xtick=data,
+        nodes near coords,
+        every node near coord/.append style={
+            rotate=90,
+            anchor=west,
+        }
+    ]
+    \addplot coordinates {(html2canvas, 5.63) (html-to-image, 3.78) (dom-to-image, 1.75) (d2im, 3.38) (d2in, 3.14)}; 
+    \end{axis}
+\end{tikzpicture}
+\footnote{库名字过长无法渲染，请见脚注}
+\footnote{d2im: dom-to-image-more}
+\footnote{d2in: dom-to-image-next}
